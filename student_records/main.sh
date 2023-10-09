@@ -1,12 +1,11 @@
 #!/usr/bin/env bash
 
-# A program that runs student information
-# A program save the contents in txt file
+# A program that runs student data
+# A program save the contents in .txt file
 
 # Function to create the student records
 
-
-student_file = "Students-list_0923.txt"
+students_file = "students-list_0923.txt"
 
 
 create_student() {
