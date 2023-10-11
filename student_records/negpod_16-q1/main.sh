@@ -1,12 +1,11 @@
 #!/usr/bin/env bash
 
-# A program that runs student information
-# A program save the contents in txt file
+# A program that runs student data
+# A program save the contents in .txt file
 
 # Function to create the student records
 
-
-student_file = "Students-list_0923.txt"
+students_file="students-list_0923.txt"
 
 
 create_student() {
@@ -18,9 +17,16 @@ create_student() {
 
     echo "Enter student ID: "
     read student_id
+    if [[ $email == *"@alustudent.com" ]]; then
 
-    echo "$email:$age:$student_id" > "$student_file"
+    echo "$email:$age:$student_id" >> "$students_file"
     echo "Student record created successfully!!"
+else 
+	clear
+	echo -e "\t\t\t******invalid email dear student*******\n\n"
+
+	./main.sh
+    fi
 }
 
 
@@ -28,16 +34,23 @@ create_student() {
 
 view_student() {
     echo "Lists of students"
-    cat "$student_file"
+    cat "$students_file"
 }
+emails='student-emails.txt'
 
+function view_email {
+    echo -n "Opening Emails"
+
+    cat "$emails"
+    ./main.sh
+}
 # function to delete a student record by their ID
 
 delete_student(){
     echo "Enter student ID to delete"
     read student_id
     
-    grep -v"^.*:$student_id$" "$student_file" >"$student_file"
+    grep -v"^.*:$student_id$" "$students_file" >>"$students_file"
 
     echo "Student record deleted successfully!"
 }
@@ -56,7 +69,7 @@ update_student() {
 
     sed -e "/^.*:$student_id$/s/[^:]*:[^:]*:[^:]*/$email:$age:$student_id/"
 
-"$student_file" > "$student_file"
+"$students_file" > "$students_file"
 
 echo "Student record updated successfully"
 }
@@ -64,11 +77,11 @@ echo "Student record updated successfully"
 
 #main function menu loops
 
-while true; do
 
     echo "------------------------------------"
     echo "Welcome to the Bachelor of Software Engineering Cohort List"
     echo "-------------------------------------"
+    echo -e "\n"
 
     echo "Please select an option:"
     echo "1. create a student record"
@@ -76,8 +89,9 @@ while true; do
     echo "3. Delete a student record"
     echo "4. Update a student record"
     echo "5. Exit"
+    echo "6. View emails"
 
-    read choice
+    read -p "Enter your choice : " choice
 
     case $choice in
 	1)
@@ -94,8 +108,15 @@ while true; do
 	    ;;
 	5)
 	    echo "Exiting the application....."
-	    exit 0
+	    pkill -f './main.sh'
 	    ;;
+	6)
+	    view_email 
+	    ;;
+	*)
+        echo "Invalid choice Try again."
+        ./main.sh
+        ;;
+
     esac
-    done
 
