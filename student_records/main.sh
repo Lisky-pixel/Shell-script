@@ -23,7 +23,7 @@ create_student() {
     echo "Student record created successfully!!"
 else 
 	clear
-	echo -e "\t\t\t*******invalid email dear*******\n\n"
+	echo -e "\t\t\t******invalid email dear student*******\n\n"
 
 	./main.sh
     fi
